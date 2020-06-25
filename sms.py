@@ -16,14 +16,6 @@ class Sms(TestCase):
             avg.append(round(sum[i]/3,3))
 
         ranking = list()
-        self.assertIsNotNone(ranking)      
-
-        for i in range(len(line)):
-            std = line[i].split(",") 
-            sum.append(int(std[2])+int(std[3])+int(std[4]))
-            avg.append(round(sum[i]/3,3))
-
-        ranking = list()
         self.assertIsNotNone(ranking)
         
         for content in sum:
@@ -34,6 +26,15 @@ class Sms(TestCase):
             ranking.append(r)
 
         fp.close()
-          
+
+        l=len(line)
+        
+        with io.open("score2.csv","w",encoding = "utf-8") as fw:
+            for i in range(l):
+                fw.write(line[i].replace('\n','')+',')
+                fw.write(' sum : '+sum[i].__str__()+',')
+                fw.write(' avg : '+avg[i].__str__()+',')
+                fw.write(' ranking : '+ranking[i].__str__()+'\n') 
+ 
 if(__name__=="__main__"):
     unittest.main()
